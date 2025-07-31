@@ -14,7 +14,7 @@ const Timeline2Container = styled.div`
 `;
 
 const Timeline2Content = styled.div`
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 100px 0 50px 0;
 `;
@@ -49,59 +49,47 @@ const TimelineWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 800px;
-  max-height: 800px;
+  min-height: 600px;
 `;
 
 const TimelineLine = styled.div`
   position: absolute;
-  left: 50%;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: linear-gradient(180deg, transparent, #ffd700, transparent);
-  transform: translateX(-50%);
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, transparent, #ffd700, transparent);
+  transform: translateY(-50%);
   z-index: 1;
 `;
 
 const TimelineSlider = styled(Slider)`
   width: 100%;
-  max-width: 600px;
-  height: 600px;
+  max-width: 1200px;
   
   .slick-slide {
-    padding: 10px 0;
+    padding: 0 15px;
     outline: none;
-    height: auto;
   }
   
   .slick-track {
     display: flex;
-    flex-direction: column;
+    align-items: center;
   }
   
   .slick-list {
-    overflow: hidden;
-    height: 600px;
+    overflow: visible;
   }
   
   .slick-dots {
-    position: absolute;
-    right: -50px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: auto;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
+    bottom: -40px;
     
     li {
-      margin: 0;
+      margin: 0 5px;
       
       button:before {
         color: rgba(255, 255, 255, 0.5);
-        font-size: 10px;
+        font-size: 12px;
       }
       
       &.slick-active button:before {
@@ -112,17 +100,15 @@ const TimelineSlider = styled(Slider)`
   
   .slick-prev,
   .slick-next {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     z-index: 10;
-    left: 50%;
-    transform: translateX(-50%);
     
     &:before {
       color: #1e3c72;
-      font-size: 20px;
+      font-size: 24px;
     }
     
     &:hover {
@@ -135,19 +121,18 @@ const TimelineSlider = styled(Slider)`
   }
   
   .slick-prev {
-    top: -50px;
+    left: -60px;
   }
   
   .slick-next {
-    bottom: -50px;
-    top: auto;
+    right: -60px;
   }
 `;
 
 const TimelineCard = styled(motion.div)`
   position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: 400px;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 15px;
   padding: 25px;
@@ -158,7 +143,7 @@ const TimelineCard = styled(motion.div)`
   margin: 0 auto;
   
   &:hover {
-    transform: translateX(-5px);
+    transform: translateY(-5px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     border-color: #ffd700;
   }
@@ -166,40 +151,40 @@ const TimelineCard = styled(motion.div)`
   ${props => props.isSelected && `
     border-color: #ffd700;
     box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
-    transform: translateX(-5px);
+    transform: translateY(-5px);
   `}
   
   &::before {
     content: '';
     position: absolute;
-    left: 50%;
-    top: -15px;
-    width: 16px;
-    height: 16px;
+    top: 50%;
+    left: -20px;
+    width: 20px;
+    height: 20px;
     background: #ffd700;
     border-radius: 50%;
-    transform: translateX(-50%);
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    transform: translateY(-50%);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
     z-index: 2;
   }
   
   &::after {
     content: '';
     position: absolute;
-    left: 50%;
-    top: -7px;
-    width: 8px;
-    height: 8px;
+    top: 50%;
+    left: -10px;
+    width: 10px;
+    height: 10px;
     background: white;
     border-radius: 50%;
-    transform: translateX(-50%);
+    transform: translateY(-50%);
     z-index: 3;
   }
 `;
 
 const CardImage = styled.div`
   width: 100%;
-  height: 160px;
+  height: 180px;
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 15px;
@@ -244,7 +229,7 @@ const CardDate = styled.div`
 
 const CardTitle = styled.h3`
   font-family: 'Inter', sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
   color: #333;
   margin-bottom: 12px;
@@ -330,29 +315,28 @@ const Timeline2 = () => {
   const sliderSettings = {
     dots: true,
     infinite: false,
-    speed: 400,
-    slidesToShow: 2,
+    speed: 300,
+    slidesToShow: 3,
     slidesToScroll: 1,
-    vertical: true,
-    verticalSwiping: true,
+    centerMode: true,
+    centerPadding: '0px',
     swipeToSlide: true,
     draggable: true,
     touchMove: true,
     swipe: true,
-    adaptiveHeight: false,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 2,
-          slidesToScroll: 1,
+          centerMode: false,
         }
       },
       {
         breakpoint: 768,
         settings: {
           slidesToShow: 1,
-          slidesToScroll: 1,
+          centerMode: false,
         }
       }
     ]
@@ -378,8 +362,8 @@ const Timeline2 = () => {
                 key={event.id}
                 isSelected={selectedEvent?.id === event.id}
                 onClick={(e) => handleCardClick(event, e)}
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ 
                   delay: index * 0.1, 
                   duration: 0.4,
