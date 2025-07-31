@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Slider from 'react-slick';
@@ -62,11 +62,16 @@ const TimelineLine = styled.div`
 const TimelineSlider = styled(Slider)`
   .slick-slide {
     padding: 0 15px;
+    outline: none;
   }
   
   .slick-track {
     display: flex;
     align-items: center;
+  }
+  
+  .slick-list {
+    overflow: visible;
   }
   
   .slick-dots {
@@ -284,6 +289,7 @@ const MetadataValue = styled.span`
 
 const Timeline2 = () => {
   const { events, selectedEvent, selectEvent } = useTimeline();
+  const sliderRef = useRef(null);
 
   // Initialize with first event selected
   useEffect(() => {
@@ -292,31 +298,36 @@ const Timeline2 = () => {
     }
   }, [events, selectedEvent, selectEvent]);
 
-  const handleCardClick = (event) => {
+  const handleCardClick = (event, e) => {
+    // Prevent card click when dragging
+    if (e && e.type === 'mousedown') return;
     selectEvent(event);
   };
 
   const sliderSettings = {
     dots: true,
     infinite: false,
-    speed: 500,
+    speed: 300,
     slidesToShow: 3,
     slidesToScroll: 1,
-    centerMode: true,
-    centerPadding: '0px',
+    centerMode: false,
+    swipeToSlide: true,
+    draggable: true,
+    touchMove: true,
+    swipe: true,
     responsive: [
       {
         breakpoint: 1024,
         settings: {
           slidesToShow: 2,
-          centerMode: false,
+          slidesToScroll: 1,
         }
       },
       {
         breakpoint: 768,
         settings: {
           slidesToShow: 1,
-          centerMode: false,
+          slidesToScroll: 1,
         }
       }
     ]
@@ -334,21 +345,22 @@ const Timeline2 = () => {
           <TimelineLine />
           
           <TimelineSlider
+            ref={sliderRef}
             {...sliderSettings}
           >
             {events.map((event, index) => (
-              <TimelineCard
-                key={event.id}
-                isSelected={selectedEvent?.id === event.id}
-                onClick={() => handleCardClick(event)}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  delay: index * 0.1, 
-                  duration: 0.4,
-                  ease: "easeOut"
-                }}
-              >
+                              <TimelineCard
+                  key={event.id}
+                  isSelected={selectedEvent?.id === event.id}
+                  onClick={(e) => handleCardClick(event, e)}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ 
+                    delay: index * 0.1, 
+                    duration: 0.4,
+                    ease: "easeOut"
+                  }}
+                >
                 <CardImage>
                   <CardImageElement src={event.imageUrl} alt={event.title} />
                 </CardImage>
