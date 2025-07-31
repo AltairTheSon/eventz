@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Timeline from './components/Timeline';
+import Timeline2 from './components/Timeline2';
 import CMS from './components/CMS';
 import { TimelineProvider } from './context/TimelineContext';
 
@@ -41,15 +42,22 @@ const NavButton = styled.button`
 const AppContent = () => {
   const location = useLocation();
   const isCMS = location.pathname === '/cms';
+  const isTimeline2 = location.pathname === '/timeline2';
 
   return (
     <AppContainer>
       <Navigation>
         <NavButton 
-          active={!isCMS}
+          active={!isCMS && !isTimeline2}
           onClick={() => window.location.href = '/'}
         >
           Timeline
+        </NavButton>
+        <NavButton 
+          active={isTimeline2}
+          onClick={() => window.location.href = '/timeline2'}
+        >
+          Timeline 2
         </NavButton>
         <NavButton 
           active={isCMS}
@@ -61,6 +69,7 @@ const AppContent = () => {
       
       <Routes>
         <Route path="/" element={<Timeline />} />
+        <Route path="/timeline2" element={<Timeline2 />} />
         <Route path="/cms" element={<CMS />} />
       </Routes>
     </AppContainer>
