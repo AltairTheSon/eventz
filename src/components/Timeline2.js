@@ -285,11 +285,14 @@ const Timeline2 = () => {
   };
 
   const handleWheel = (e) => {
-    e.preventDefault();
-    if (e.deltaY > 0) {
-      scrollNext();
-    } else {
-      scrollPrev();
+    // Only respond to horizontal scroll (deltaX) or when Ctrl+scroll is used
+    if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.ctrlKey) {
+      e.preventDefault();
+      if (e.deltaX > 0 || (e.ctrlKey && e.deltaY > 0)) {
+        scrollNext();
+      } else {
+        scrollPrev();
+      }
     }
   };
 
