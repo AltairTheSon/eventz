@@ -50,8 +50,8 @@ const TimelineScroll = styled.div`
   display: flex;
   gap: 30px;
   padding: 20px 0;
-  transition: transform 0.3s ease;
-  transform: translateX(${props => props.scrollOffset}px);
+  will-change: transform;
+  transform: translateX(${props => props.scrollOffset}px) translateZ(0);
 `;
 
 const TimelineCard = styled(motion.div)`
@@ -60,20 +60,20 @@ const TimelineCard = styled(motion.div)`
   border-radius: 20px;
   padding: 30px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  will-change: transform;
+  transform: translateZ(0);
   
   &:hover {
-    transform: translateY(-10px);
+    transform: translateY(-10px) translateZ(0);
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
   }
   
   ${props => props.isSelected && `
-    transform: scale(1.05);
+    transform: scale(1.05) translateZ(0);
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
     border: 2px solid #667eea;
   `}
@@ -103,10 +103,11 @@ const CardImageElement = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s ease;
+  will-change: transform;
+  transform: translateZ(0);
   
   ${TimelineCard}:hover & {
-    transform: scale(1.1);
+    transform: scale(1.1) translateZ(0);
   }
 `;
 
@@ -324,8 +325,11 @@ const Timeline2 = () => {
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -50 }}
-                  transition={{ delay: index * 0.1, duration: 0.5 }}
-                  whileHover={{ scale: 1.02 }}
+                  transition={{ 
+                    delay: index * 0.05, 
+                    duration: 0.3,
+                    ease: "easeOut"
+                  }}
                 >
                   <CardImage>
                     <CardImageElement src={event.imageUrl} alt={event.title} />
