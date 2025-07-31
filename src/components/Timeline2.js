@@ -14,7 +14,7 @@ const Timeline2Container = styled.div`
 `;
 
 const Timeline2Content = styled.div`
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 100px 0 50px 0;
 `;
@@ -49,7 +49,8 @@ const TimelineWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 600px;
+  min-height: 800px;
+  max-height: 800px;
 `;
 
 const TimelineLine = styled.div`
@@ -65,11 +66,13 @@ const TimelineLine = styled.div`
 
 const TimelineSlider = styled(Slider)`
   width: 100%;
-  max-width: 800px;
+  max-width: 600px;
+  height: 600px;
   
   .slick-slide {
-    padding: 20px 0;
+    padding: 10px 0;
     outline: none;
+    height: auto;
   }
   
   .slick-track {
@@ -78,26 +81,27 @@ const TimelineSlider = styled(Slider)`
   }
   
   .slick-list {
-    overflow: visible;
+    overflow: hidden;
+    height: 600px;
   }
   
   .slick-dots {
     position: absolute;
-    right: -60px;
+    right: -50px;
     top: 50%;
     transform: translateY(-50%);
     width: auto;
     height: auto;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
     
     li {
       margin: 0;
       
       button:before {
         color: rgba(255, 255, 255, 0.5);
-        font-size: 12px;
+        font-size: 10px;
       }
       
       &.slick-active button:before {
@@ -108,8 +112,8 @@ const TimelineSlider = styled(Slider)`
   
   .slick-prev,
   .slick-next {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     background: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     z-index: 10;
@@ -118,7 +122,7 @@ const TimelineSlider = styled(Slider)`
     
     &:before {
       color: #1e3c72;
-      font-size: 24px;
+      font-size: 20px;
     }
     
     &:hover {
@@ -131,11 +135,11 @@ const TimelineSlider = styled(Slider)`
   }
   
   .slick-prev {
-    top: -60px;
+    top: -50px;
   }
   
   .slick-next {
-    bottom: -60px;
+    bottom: -50px;
     top: auto;
   }
 `;
@@ -143,7 +147,7 @@ const TimelineSlider = styled(Slider)`
 const TimelineCard = styled(motion.div)`
   position: relative;
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 15px;
   padding: 25px;
@@ -169,13 +173,13 @@ const TimelineCard = styled(motion.div)`
     content: '';
     position: absolute;
     left: 50%;
-    top: -20px;
-    width: 20px;
-    height: 20px;
+    top: -15px;
+    width: 16px;
+    height: 16px;
     background: #ffd700;
     border-radius: 50%;
     transform: translateX(-50%);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
     z-index: 2;
   }
   
@@ -183,9 +187,9 @@ const TimelineCard = styled(motion.div)`
     content: '';
     position: absolute;
     left: 50%;
-    top: -10px;
-    width: 10px;
-    height: 10px;
+    top: -7px;
+    width: 8px;
+    height: 8px;
     background: white;
     border-radius: 50%;
     transform: translateX(-50%);
@@ -195,7 +199,7 @@ const TimelineCard = styled(motion.div)`
 
 const CardImage = styled.div`
   width: 100%;
-  height: 180px;
+  height: 160px;
   border-radius: 10px;
   overflow: hidden;
   margin-bottom: 15px;
@@ -240,7 +244,7 @@ const CardDate = styled.div`
 
 const CardTitle = styled.h3`
   font-family: 'Inter', sans-serif;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #333;
   margin-bottom: 12px;
@@ -326,8 +330,8 @@ const Timeline2 = () => {
   const sliderSettings = {
     dots: true,
     infinite: false,
-    speed: 300,
-    slidesToShow: 3,
+    speed: 400,
+    slidesToShow: 2,
     slidesToScroll: 1,
     vertical: true,
     verticalSwiping: true,
@@ -335,6 +339,7 @@ const Timeline2 = () => {
     draggable: true,
     touchMove: true,
     swipe: true,
+    adaptiveHeight: false,
     responsive: [
       {
         breakpoint: 1024,
