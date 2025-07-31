@@ -46,28 +46,35 @@ const HeaderSubtitle = styled.p`
 const TimelineWrapper = styled.div`
   position: relative;
   margin: 60px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 600px;
 `;
 
 const TimelineLine = styled.div`
   position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, transparent, #ffd700, transparent);
-  transform: translateY(-50%);
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, transparent, #ffd700, transparent);
+  transform: translateX(-50%);
   z-index: 1;
 `;
 
 const TimelineSlider = styled(Slider)`
+  width: 100%;
+  max-width: 800px;
+  
   .slick-slide {
-    padding: 0 15px;
+    padding: 20px 0;
     outline: none;
   }
   
   .slick-track {
     display: flex;
-    align-items: center;
+    flex-direction: column;
   }
   
   .slick-list {
@@ -75,10 +82,18 @@ const TimelineSlider = styled(Slider)`
   }
   
   .slick-dots {
-    bottom: -40px;
+    position: absolute;
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
     
     li {
-      margin: 0 5px;
+      margin: 0;
       
       button:before {
         color: rgba(255, 255, 255, 0.5);
@@ -98,6 +113,8 @@ const TimelineSlider = styled(Slider)`
     background: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     z-index: 10;
+    left: 50%;
+    transform: translateX(-50%);
     
     &:before {
       color: #1e3c72;
@@ -114,17 +131,19 @@ const TimelineSlider = styled(Slider)`
   }
   
   .slick-prev {
-    left: -60px;
+    top: -60px;
   }
   
   .slick-next {
-    right: -60px;
+    bottom: -60px;
+    top: auto;
   }
 `;
 
 const TimelineCard = styled(motion.div)`
   position: relative;
-  width: 350px;
+  width: 100%;
+  max-width: 400px;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 15px;
   padding: 25px;
@@ -132,10 +151,10 @@ const TimelineCard = styled(motion.div)`
   border: 2px solid transparent;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin: 20px 0;
+  margin: 0 auto;
   
   &:hover {
-    transform: translateY(-5px);
+    transform: translateX(-5px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
     border-color: #ffd700;
   }
@@ -143,19 +162,19 @@ const TimelineCard = styled(motion.div)`
   ${props => props.isSelected && `
     border-color: #ffd700;
     box-shadow: 0 20px 40px rgba(255, 215, 0, 0.2);
-    transform: translateY(-5px);
+    transform: translateX(-5px);
   `}
   
   &::before {
     content: '';
     position: absolute;
-    top: 50%;
-    left: -20px;
+    left: 50%;
+    top: -20px;
     width: 20px;
     height: 20px;
     background: #ffd700;
     border-radius: 50%;
-    transform: translateY(-50%);
+    transform: translateX(-50%);
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
     z-index: 2;
   }
@@ -163,13 +182,13 @@ const TimelineCard = styled(motion.div)`
   &::after {
     content: '';
     position: absolute;
-    top: 50%;
-    left: -10px;
+    left: 50%;
+    top: -10px;
     width: 10px;
     height: 10px;
     background: white;
     border-radius: 50%;
-    transform: translateY(-50%);
+    transform: translateX(-50%);
     z-index: 3;
   }
 `;
@@ -310,7 +329,8 @@ const Timeline2 = () => {
     speed: 300,
     slidesToShow: 3,
     slidesToScroll: 1,
-    centerMode: false,
+    vertical: true,
+    verticalSwiping: true,
     swipeToSlide: true,
     draggable: true,
     touchMove: true,
@@ -349,18 +369,18 @@ const Timeline2 = () => {
             {...sliderSettings}
           >
             {events.map((event, index) => (
-                              <TimelineCard
-                  key={event.id}
-                  isSelected={selectedEvent?.id === event.id}
-                  onClick={(e) => handleCardClick(event, e)}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ 
-                    delay: index * 0.1, 
-                    duration: 0.4,
-                    ease: "easeOut"
-                  }}
-                >
+              <TimelineCard
+                key={event.id}
+                isSelected={selectedEvent?.id === event.id}
+                onClick={(e) => handleCardClick(event, e)}
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ 
+                  delay: index * 0.1, 
+                  duration: 0.4,
+                  ease: "easeOut"
+                }}
+              >
                 <CardImage>
                   <CardImageElement src={event.imageUrl} alt={event.title} />
                 </CardImage>
