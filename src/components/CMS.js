@@ -33,11 +33,12 @@ const CMSSubtitle = styled.p`
 `;
 
 const CMSContent = styled.div`
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 40px;
+  min-height: calc(100vh - 200px);
 `;
 
 const EventsList = styled.div`
@@ -46,6 +47,8 @@ const EventsList = styled.div`
   padding: 30px;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
 `;
 
 const EventsListHeader = styled.div`
@@ -168,7 +171,8 @@ const FormContainer = styled.div`
   padding: 30px;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  height: fit-content;
+  max-height: calc(100vh - 200px);
+  overflow-y: auto;
 `;
 
 const FormTitle = styled.h2`
