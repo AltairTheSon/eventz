@@ -253,13 +253,12 @@ const Timeline2 = () => {
   const scrollRef = useRef(null);
   const cardWidth = 430; // 400px card + 30px gap
 
+  // Initialize with first event selected
   useEffect(() => {
-    if (selectedEvent) {
-      const index = events.findIndex(event => event.id === selectedEvent.id);
-      setCurrentIndex(index);
-      setScrollOffset(-index * cardWidth);
+    if (events.length > 0 && !selectedEvent) {
+      selectEvent(events[0]);
     }
-  }, [selectedEvent, events]);
+  }, [events, selectedEvent, selectEvent]);
 
   const handleCardClick = (event) => {
     selectEvent(event);
@@ -268,9 +267,6 @@ const Timeline2 = () => {
   const scrollToIndex = (index) => {
     setCurrentIndex(index);
     setScrollOffset(-index * cardWidth);
-    if (events[index]) {
-      selectEvent(events[index]);
-    }
   };
 
   const scrollNext = () => {
@@ -285,17 +281,7 @@ const Timeline2 = () => {
     }
   };
 
-  const handleWheel = (e) => {
-    // Only respond to horizontal scroll (deltaX) or when Ctrl+scroll is used
-    if (Math.abs(e.deltaX) > Math.abs(e.deltaY) || e.ctrlKey) {
-      e.preventDefault();
-      if (e.deltaX > 0 || (e.ctrlKey && e.deltaY > 0)) {
-        scrollNext();
-      } else {
-        scrollPrev();
-      }
-    }
-  };
+
 
   return (
     <Timeline2Container>
@@ -305,7 +291,7 @@ const Timeline2 = () => {
           <HeaderSubtitle>Explore our story through time</HeaderSubtitle>
         </Header>
 
-        <TimelineWrapper onWheel={handleWheel}>
+        <TimelineWrapper>
           <NavigationButtons>
             <NavButton onClick={scrollPrev} disabled={currentIndex === 0}>
               <IoChevronBack size={24} color="#667eea" />
