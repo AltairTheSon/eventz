@@ -410,13 +410,7 @@ const PreviewImage = styled.img`
   object-fit: cover;
 `;
 
-const ImagePlaceholder = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 14px;
-`;
+
 
 const CMS = () => {
   const { 
