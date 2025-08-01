@@ -31,6 +31,22 @@ const TimelineLeft = styled.div`
   flex-direction: column;
   justify-content: center;
   z-index: 10;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: repeating-linear-gradient(
+      to bottom,
+      #ffd700 0px,
+      #ffd700 8px,
+      transparent 8px,
+      transparent 16px
+    );
+  }
 `;
 
 const TimelineRight = styled.div`
@@ -44,6 +60,22 @@ const TimelineRight = styled.div`
   justify-content: center;
   align-items: flex-end;
   z-index: 10;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: repeating-linear-gradient(
+      to bottom,
+      #ffd700 0px,
+      #ffd700 8px,
+      transparent 8px,
+      transparent 16px
+    );
+  }
 `;
 
 const TimelineLine = styled.div`
@@ -52,7 +84,7 @@ const TimelineLine = styled.div`
   top: 0;
   bottom: 0;
   width: 2px;
-  background: linear-gradient(to bottom, transparent, #ff4444, transparent);
+  background: linear-gradient(to bottom, transparent, #ffd700, transparent);
   transform: translateX(-50%);
 `;
 
@@ -61,7 +93,7 @@ const TimelineTick = styled.div`
   left: 50%;
   width: 8px;
   height: 8px;
-  background: #ff4444;
+  background: #ffd700;
   border-radius: 50%;
   transform: translateX(-50%);
   top: ${props => props.position}%;
@@ -105,17 +137,6 @@ const EventDate = styled(motion.div)`
   }
 `;
 
-const SelectionLine = styled(motion.div)`
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: #ff4444;
-  transform: translateY(-50%);
-  z-index: 5;
-`;
-
 const CentralContent = styled.div`
   position: relative;
   width: 60%;
@@ -147,12 +168,12 @@ const ImageStack = styled.div`
 
 const StackedImage = styled(motion.img)`
   position: absolute;
-  width: 80%;
-  height: 60%;
+  width: 70%;
+  height: 50%;
   object-fit: cover;
   border-radius: 8px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-  opacity: 0.6;
+  opacity: 0.4;
   z-index: ${props => props.zIndex || 1};
 `;
 
@@ -189,8 +210,8 @@ const EventTags = styled.div`
 `;
 
 const Tag = styled.span`
-  background: rgba(255, 68, 68, 0.2);
-  color: #ff4444;
+  background: rgba(255, 215, 0, 0.2);
+  color: #ffd700;
   padding: 5px 12px;
   border-radius: 15px;
   font-size: 12px;
@@ -236,11 +257,7 @@ const Timeline = () => {
     return (eventIndex / (events.length - 1)) * 100;
   };
 
-  const getSelectedEventPosition = () => {
-    if (!selectedEvent) return 50;
-    const index = events.findIndex(event => event.id === selectedEvent.id);
-    return getEventPosition(index);
-  };
+
 
   return (
     <TimelineContainer>
@@ -254,14 +271,6 @@ const Timeline = () => {
             position={getEventPosition(index)}
           />
         ))}
-
-        {/* Selection line */}
-        <SelectionLine
-          initial={{ scaleX: 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: 0.5 }}
-          style={{ top: `${getSelectedEventPosition()}%` }}
-        />
 
         {/* Left side - Event titles */}
         <TimelineLeft>
@@ -324,7 +333,7 @@ const Timeline = () => {
               
               if (distance <= 2) {
                 const zIndex = 10 - distance;
-                const topPosition = index < selectedIndex ? '-30%' : '130%';
+                const topPosition = index < selectedIndex ? '-40%' : '140%';
                 
                 return (
                   <StackedImage
@@ -333,7 +342,7 @@ const Timeline = () => {
                     alt={event.title}
                     style={{
                       top: topPosition,
-                      opacity: 0.4,
+                      opacity: 0.3,
                       zIndex: zIndex
                     }}
                     zIndex={zIndex}
