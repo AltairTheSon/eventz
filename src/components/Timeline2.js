@@ -65,7 +65,6 @@ const TimelineLine = styled.div`
 
 const TimelineSlider = styled(Slider)`
   width: 100%;
-  max-width: 1200px;
   
   .slick-slide {
     padding: 0 15px;
@@ -74,7 +73,7 @@ const TimelineSlider = styled(Slider)`
   
   .slick-track {
     display: flex;
-    align-items: center;
+    align-items: stretch;
   }
   
   .slick-list {
@@ -133,6 +132,7 @@ const TimelineCard = styled(motion.div)`
   position: relative;
   width: 100%;
   max-width: 400px;
+  min-height: 500px;
   background: rgba(255, 255, 255, 0.95);
   border-radius: 15px;
   padding: 25px;
@@ -141,6 +141,8 @@ const TimelineCard = styled(motion.div)`
   cursor: pointer;
   transition: all 0.3s ease;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
   
   &:hover {
     transform: translateY(-5px);
@@ -158,13 +160,13 @@ const TimelineCard = styled(motion.div)`
     content: '';
     position: absolute;
     top: 50%;
-    left: -20px;
-    width: 20px;
-    height: 20px;
+    left: -25px;
+    width: 16px;
+    height: 16px;
     background: #ffd700;
     border-radius: 50%;
     transform: translateY(-50%);
-    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
     z-index: 2;
   }
   
@@ -172,9 +174,9 @@ const TimelineCard = styled(motion.div)`
     content: '';
     position: absolute;
     top: 50%;
-    left: -10px;
-    width: 10px;
-    height: 10px;
+    left: -17px;
+    width: 8px;
+    height: 8px;
     background: white;
     border-radius: 50%;
     transform: translateY(-50%);
@@ -246,6 +248,7 @@ const CardBody = styled.p`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  flex: 1;
 `;
 
 const CardTags = styled.div`
@@ -253,6 +256,8 @@ const CardTags = styled.div`
   flex-wrap: wrap;
   gap: 6px;
   margin-bottom: 15px;
+  min-height: 40px;
+  align-items: flex-start;
 `;
 
 const CardTag = styled.span`
@@ -272,6 +277,8 @@ const CardMetadata = styled.div`
   gap: 12px;
   padding-top: 12px;
   border-top: 1px solid #eee;
+  min-height: 60px;
+  align-items: flex-start;
 `;
 
 const MetadataItem = styled.div`
